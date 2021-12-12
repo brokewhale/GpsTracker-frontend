@@ -29,9 +29,11 @@
 }
 
 .navbar {
-  position: relative;
+  position: absolute;
   z-index: 999999;
   border-radius: 7px;
+  left: 50%;
+  transform: translate(-50%, 0);
 
   background: #efefef;
   max-width: 50vh;
@@ -56,4 +58,13 @@
 .nav__link:hover {
   color: cornflowerblue;
   cursor: pointer;
+}
+
+.marker-pointer {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: cornflowerblue;
+  border: 1px solid white;
 }
