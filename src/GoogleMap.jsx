@@ -3,6 +3,7 @@ import GoogleMapReact from "google-map-react";
 import Navbar from "./components/Navbar";
 // import { withScriptjs, withGoogleMap } from "react-google-maps";
 // import { ReactComponent as Satellite } from "./satellite-svgrepo-com.svg";
+import { useGetLocations } from "./query/getlocationHook";
 
 const AnyReactComponent = ({ text }) => (
   <div
@@ -18,6 +19,8 @@ const AnyReactComponent = ({ text }) => (
 );
 
 export default function SimpleMap() {
+  const { data: locations, isSuccess } = useGetLocations();
+
   const defaultProps = {
     center: {
       lat: 7.5177,
@@ -26,38 +29,6 @@ export default function SimpleMap() {
     zoom: 11,
   };
 
-  const data = [
-    {
-      longitude: "4.530315",
-      latitude: "7.5177",
-      time: "2021-12-12T11:39:27.308Z",
-      _id: "61b5e0d2b4b53c922f76379d",
-    },
-    {
-      longitude: "4.530215",
-      latitude: "7.5077",
-      time: "2021-12-12T11:39:27.308Z",
-      _id: "61b5e0d2b4b53c922f76379d",
-    },
-    {
-      longitude: "4.5251",
-      latitude: "7.5169",
-      time: "2021-12-12T11:39:27.308Z",
-      _id: "61b5e0fcb4b53c922f7637a1",
-    },
-    {
-      longitude: "4.5131",
-      latitude: "7.5149",
-      time: "2021-12-12T11:39:27.308Z",
-      _id: "61b5e0fcb4b53c922f7637a1",
-    },
-    {
-      longitude: "4.5251",
-      latitude: "7.5169",
-      time: "2021-12-12T11:39:27.308Z",
-      _id: "61b5e0fcb4b53c922f7637a1",
-    },
-  ];
   return (
     <>
       {/* Important! Always set the container height explicitly */}
@@ -69,13 +40,16 @@ export default function SimpleMap() {
           defaultZoom={defaultProps.zoom}
         >
           {/* <Marker position={{ lat: 7.5177, lng: 4.530315 }} /> */}
-          {data.map((item) => (
+          {/* {data.map((item) => ( */}
+          {isSuccess && (
             <AnyReactComponent
-              lat={item.latitude}
-              lng={item.longitude}
+              lng={locations[`${locations?.length - 1}`]?.longitude}
+              lat={locations[`${locations?.length - 1}`]?.latitude}
               text=""
             />
-          ))}
+          )}
+
+          {/* ))} */}
         </GoogleMapReact>
       </div>
     </>
